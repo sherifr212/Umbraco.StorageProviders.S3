@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>Umbraco Storage Providers - Common S3 Blob Storage</Title>
@@ -24,7 +24,7 @@
   <ItemGroup>
     <PackageReference Include="AWSSDK.S3" Version="3.7.309" />
     <PackageReference Include="SixLabors.ImageSharp.Web.Providers.AWS" Version="3.1.2" />
-    <PackageReference Include="Umbraco.Cms.Web.Common" Version="13.3.2" />
+    <PackageReference Include="Umbraco.Cms.Web.Common" Version="16.2.0" />
   </ItemGroup>
 
 </Project>
