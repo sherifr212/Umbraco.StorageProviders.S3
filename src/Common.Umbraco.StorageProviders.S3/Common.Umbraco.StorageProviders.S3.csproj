@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.S3" Version="3.7.309" />
-    <PackageReference Include="SixLabors.ImageSharp.Web.Providers.AWS" Version="3.1.2" />
+    <PackageReference Include="AWSSDK.S3" Version="4.0.7.7" />
+    <PackageReference Include="SixLabors.ImageSharp.Web.Providers.AWS" Version="3.2.0" />
     <PackageReference Include="Umbraco.Cms.Web.Common" Version="16.2.0" />
   </ItemGroup>
 
