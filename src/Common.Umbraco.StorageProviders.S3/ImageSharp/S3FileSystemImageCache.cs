@@ -1,5 +1,6 @@
 ﻿using Common.Umbraco.StorageProviders.S3.IO;
 
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 using SixLabors.ImageSharp.Web;
@@ -13,19 +14,21 @@ namespace Common.Umbraco.StorageProviders.S3.ImageSharp
     {
         private readonly string _mediaFileSystemName;
         private readonly string _cachePath;
+        private readonly IServiceProvider _serviceProvider;
         private AWSS3StorageCache _baseCache;
 
-        public S3FileSystemImageCache(IOptionsMonitor<S3FileSystemOptions> options, string mediaFileSystemName, string cachePath)
+        public S3FileSystemImageCache(IOptionsMonitor<S3FileSystemOptions> options, IServiceProvider serviceProvider, string mediaFileSystemName, string cachePath)
         {
             _mediaFileSystemName = mediaFileSystemName;
             _cachePath = cachePath;
+            _serviceProvider = serviceProvider;
             var fileSystemOptions = options.Get(_mediaFileSystemName);
 
             string bucketName = fileSystemOptions.BucketName;
 
             AWSS3StorageCacheOptions cacheOptions = GetAWSS3StorageCacheOptions(fileSystemOptions);
 
-            _baseCache = new AWSS3StorageCache(Options.Create(cacheOptions));
+            _baseCache = new AWSS3StorageCache(Options.Create(cacheOptions), _serviceProvider);
 
             _ = options.OnChange(OptionsOnChange);
         }
@@ -36,7 +39,7 @@ namespace Common.Umbraco.StorageProviders.S3.ImageSharp
 
             var cacheOptions = GetAWSS3StorageCacheOptions(options);
 
-            _baseCache = new AWSS3StorageCache(Options.Create(cacheOptions));
+            _baseCache = new AWSS3StorageCache(Options.Create(cacheOptions), _serviceProvider);
         }
 
         private AWSS3StorageCacheOptions GetAWSS3StorageCacheOptions(S3FileSystemOptions s3FileSystemOptions)

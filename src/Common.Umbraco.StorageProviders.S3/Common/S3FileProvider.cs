@@ -65,7 +65,7 @@ namespace Common.Umbraco.StorageProviders.S3.Common
                 // from the NextContinuationToken property of the response.
                 listObjectsRequest.ContinuationToken = listObjectsResponse.NextContinuationToken;
             }
-            while (listObjectsResponse.IsTruncated);
+            while (listObjectsResponse.IsTruncated == true);
 
             return listS3Objects.Count == 0 ?
                     NotFoundDirectoryContents.Singleton :

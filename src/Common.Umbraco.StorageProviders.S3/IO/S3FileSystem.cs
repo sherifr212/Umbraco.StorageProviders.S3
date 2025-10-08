@@ -105,7 +105,7 @@ namespace Common.Umbraco.StorageProviders.S3.IO
                 // from the NextContinuationToken property of the response.
                 listObjectsRequest.ContinuationToken = listObjectsResponse.NextContinuationToken;
             }
-            while (listObjectsResponse.IsTruncated);
+            while (listObjectsResponse.IsTruncated == true);
         }
 
         public void DeleteFile(string path)
@@ -173,7 +173,7 @@ namespace Common.Umbraco.StorageProviders.S3.IO
                 // from the NextContinuationToken property of the response.
                 listObjectsRequest.ContinuationToken = listObjectsResponse.NextContinuationToken;
             }
-            while (listObjectsResponse.IsTruncated);
+            while (listObjectsResponse.IsTruncated == true);
 
             return commonPrefixes.Select(x => RemovePrefix(x));
         }
@@ -207,7 +207,7 @@ namespace Common.Umbraco.StorageProviders.S3.IO
                 // from the NextContinuationToken property of the response.
                 listObjectsRequest.ContinuationToken = listObjectsResponse.NextContinuationToken;
             }
-            while (listObjectsResponse.IsTruncated);
+            while (listObjectsResponse.IsTruncated == true);
 
             string ext = Path.GetExtension(filter);
             if (!ext.Contains("*"))
@@ -230,7 +230,7 @@ namespace Common.Umbraco.StorageProviders.S3.IO
             };
 
             var response = Task.Run(async () => await _s3Client.GetObjectMetadataAsync(request)).GetAwaiter().GetResult();
-            return new DateTimeOffset(response.LastModified);
+            return response.LastModified.HasValue ? new DateTimeOffset(response.LastModified.Value) : DateTimeOffset.MinValue;
         }
 
         public string GetRelativePath(string fullPathOrUrl)

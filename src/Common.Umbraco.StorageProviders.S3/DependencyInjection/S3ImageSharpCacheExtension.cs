@@ -24,7 +24,10 @@ namespace Common.Umbraco.StorageProviders.S3.DependencyInjection
             ArgumentNullException.ThrowIfNull(builder);
 
             builder.Services.AddUnique<IImageCache>(provider => new S3FileSystemImageCache(
-                provider.GetRequiredService<IOptionsMonitor<S3FileSystemOptions>>(), mediaFileSystemName, cachePath));
+                provider.GetRequiredService<IOptionsMonitor<S3FileSystemOptions>>(), 
+                provider, 
+                mediaFileSystemName, 
+                cachePath));
 
             return builder;
         }

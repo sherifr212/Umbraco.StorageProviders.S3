@@ -16,8 +16,8 @@ namespace Common.Umbraco.StorageProviders.S3.Common
             _s3Object = s3Object;
             _s3Client = s3Client;
             _bucketName = bucketName;
-            LastModified = _s3Object.LastModified;
-            Length = _s3Object.Size;
+            LastModified = _s3Object.LastModified.HasValue ? new DateTimeOffset(_s3Object.LastModified.Value) : DateTimeOffset.MinValue;
+            Length = _s3Object.Size ?? 0;
             Name = _s3Object.Key;
         }
 
